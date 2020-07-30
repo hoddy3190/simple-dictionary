@@ -3,6 +3,15 @@
 	"displayName": "simple-dictionary",
 	"description": "Pop up the meaning of the mouse-over word",
 	"version": "0.0.1",
+	"publisher": "hoddy3190",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/hoddy3190/simple-dictionary.git"
+	},
+	"bugs": {
+		"url": "https://github.com/hoddy3190/simple-dictionary/issues"
+	},
+	"license": "MIT",
 	"engines": {
 		"vscode": "^1.47.0"
 	},
