@@ -2,6 +2,12 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 
+interface Dictionary {
+  [word: string]: string;
+}
+
+const userDict: Dictionary = { HELLO: "hello", FUGA: "fuga" };
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -11,20 +17,19 @@ export function activate(context: vscode.ExtensionContext) {
     'Congratulations, your extension "simple-dictionary" is now active!'
   );
 
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  const disposable = vscode.commands.registerCommand(
-    "simple-dictionary.helloWorld",
-    () => {
-      // The code you place here will be executed every time your command is executed
+  const disposable = vscode.languages.registerHoverProvider(["*"], {
+    provideHover(document, position) {
+      const range = document.getWordRangeAtPosition(position);
+      const word = document.getText(range);
 
-      // Display a message box to the user
-      vscode.window.showInformationMessage(
-        "Hello World from simple-dictionary!"
-      );
-    }
-  );
+      if (word in userDict) {
+        return new vscode.Hover({
+          language: "",
+          value: userDict[word],
+        });
+      }
+    },
+  });
 
   context.subscriptions.push(disposable);
 }
