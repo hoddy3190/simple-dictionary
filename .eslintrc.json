@@ -16,6 +16,7 @@
     "rules": {
         "@typescript-eslint/class-name-casing": "warn",
         "@typescript-eslint/semi": "warn",
+        "@typescript-eslint/explicit-function-return-type": "off",
         "curly": "warn",
         "eqeqeq": "warn",
         "no-throw-literal": "warn",
