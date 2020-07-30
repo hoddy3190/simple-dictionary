@@ -30,7 +30,7 @@
 					"title": "Path list of dictionaries",
 					"type": "string",
 					"default": "",
-					"description": "If multiple, use a comma as delimited string (e.g. /path/to/dict1,/path/to/dict2). Dictionary file format is tsv, 'word<tab>meaning'."
+					"description": "If multiple, use a comma as delimited string (e.g. /path/to/dict1,/path/to/dict2). Dictionary file format is tsv, 'index<tab>meaning'."
 				}
 			}
 		}
