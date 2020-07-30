@@ -14,6 +14,17 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"configuration": {
+			"title": "simple-dictionary",
+			"properties": {
+				"simple-dictionary.dictPaths": {
+					"title": "Path list of dictionaries",
+					"type": "string",
+					"default": "",
+					"description": "If multiple, use a comma as delimited string (e.g. /path/to/dict1,/path/to/dict2). Dictionary file format is tsv, 'word<tab>meaning'."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
