@@ -1,12 +1,38 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+import * as fs from "fs";
+import * as readline from "readline";
 
 interface Dictionary {
   [word: string]: string;
 }
 
-const userDict: Dictionary = { HELLO: "hello", FUGA: "fuga" };
+const makeDict = () => {
+  const config = vscode.workspace.getConfiguration("simple-dictionary");
+  const dictPathStr = config.dictPaths;
+  if (dictPathStr === "") {
+    return {} as Dictionary;
+  }
+
+  const userDict: Dictionary = {};
+  const dictPathList = dictPathStr.split(",");
+
+  for (const dictPath of dictPathList) {
+    const stream = fs.createReadStream(dictPath);
+    const reader = readline.createInterface({ input: stream });
+
+    reader.on("line", (row: string) => {
+      console.log(row);
+      const [word, meaning] = row.split("\t");
+      userDict[word] = meaning;
+    });
+  }
+
+  return userDict;
+};
+
+const userDict: Dictionary = makeDict();
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
