@@ -3,10 +3,22 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as readline from "readline";
+import * as path from "path";
 
 interface Dictionary {
   [word: string]: string;
 }
+
+const makeAbsPaths = (dictPathStr: string) => {
+  if (fs.existsSync(dictPathStr)) {
+    return dictPathStr;
+  }
+  if (vscode.workspace.workspaceFolders === undefined) {
+    return dictPathStr;
+  }
+  const workspaceRoot = vscode.workspace.workspaceFolders[0];
+  return path.join(workspaceRoot.uri.path, dictPathStr);
+};
 
 const makeDict = () => {
   const config = vscode.workspace.getConfiguration("simple-dictionary");
@@ -16,10 +28,10 @@ const makeDict = () => {
   }
 
   const userDict: Dictionary = {};
-  const dictPathList = dictPathStr.split(",");
+  const dictPathStrList = dictPathStr.split(",");
 
-  for (const dictPath of dictPathList) {
-    const stream = fs.createReadStream(dictPath);
+  for (const dictPathStr of dictPathStrList) {
+    const stream = fs.createReadStream(makeAbsPaths(dictPathStr));
     const reader = readline.createInterface({ input: stream });
 
     reader.on("line", (row: string) => {
