@@ -23,7 +23,6 @@ const makeDict = () => {
     const reader = readline.createInterface({ input: stream });
 
     reader.on("line", (row: string) => {
-      console.log(row);
       const [word, meaning] = row.split("\t");
       userDict[word] = meaning;
     });
